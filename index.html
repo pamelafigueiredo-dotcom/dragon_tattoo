@@ -4,19 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>dragon_tattoo</title>
+    <title>Atendente Virtual - Dragon_Tattoo</title>
 
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: Georgia, "Times New Roman", serif;
+        }
+
+        :root {
+            --bg-dark: #0b0b0c;
+            --bg-panel: #131314;
+            --bg-bot: #1d1d1f;
+            --accent: #b3202f;
+            --accent-dark: #7d1520;
+            --text: #ececec;
+            --muted: #8e8e93;
+            --border: #2a2a2d;
         }
 
         body {
             min-height: 100vh;
-            background: linear-gradient(135deg,#bc1213,#f38586,#731013, #886d6c,#bdb2b4);
+            background: linear-gradient(135deg, #0b0b0c, #2a0b10);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -27,10 +38,11 @@
             width: 100%;
             max-width: 430px;
             height: 700px;
-            background: #731013;
+            background: var(--bg-panel);
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            border: 1px solid var(--border);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
             display: flex;
             flex-direction: column;
         }
@@ -38,19 +50,21 @@
         /* CABEÇALHO */
 
         .chat-header {
-            background: linear-gradient(135deg, #1565c0, #1976d2);
+            background: linear-gradient(135deg, #1a1a1c, var(--accent-dark));
             color: white;
             padding: 20px;
             display: flex;
             align-items: center;
             gap: 14px;
+            border-bottom: 2px solid var(--accent);
         }
 
-        .school-icon {
+        .studio-icon {
             width: 48px;
             height: 48px;
-            background: white;
-            color: #1565c0;
+            background: var(--bg-dark);
+            color: white;
+            border: 2px solid var(--accent);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -61,6 +75,7 @@
         .header-info h2 {
             font-size: 18px;
             margin-bottom: 4px;
+            letter-spacing: 0.5px;
         }
 
         .status {
@@ -83,7 +98,7 @@
             flex: 1;
             padding: 20px;
             overflow-y: auto;
-            background: #f5f7fb;
+            background: var(--bg-dark);
         }
 
         .message {
@@ -105,17 +120,18 @@
             border-radius: 15px;
             font-size: 14px;
             line-height: 1.5;
+            overflow-wrap: anywhere;
         }
 
         .bot .message-content {
-            background: white;
-            color: #333;
+            background: var(--bg-bot);
+            color: var(--text);
+            border: 1px solid var(--border);
             border-bottom-left-radius: 4px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
         }
 
         .user .message-content {
-            background: #1976d2;
+            background: var(--accent);
             color: white;
             border-bottom-right-radius: 4px;
         }
@@ -131,13 +147,13 @@
 
         .quick-options {
             padding: 10px 20px;
-            background: white;
-            border-top: 1px solid #eee;
+            background: var(--bg-panel);
+            border-top: 1px solid var(--border);
         }
 
         .quick-options p {
             font-size: 12px;
-            color: #777;
+            color: var(--muted);
             margin-bottom: 8px;
         }
 
@@ -148,9 +164,9 @@
         }
 
         .option {
-            border: 1px solid #1976d2;
-            background: white;
-            color: #1976d2;
+            border: 1px solid var(--accent);
+            background: transparent;
+            color: var(--text);
             padding: 8px 11px;
             border-radius: 20px;
             cursor: pointer;
@@ -159,7 +175,7 @@
         }
 
         .option:hover {
-            background: #1976d2;
+            background: var(--accent);
             color: white;
         }
 
@@ -170,18 +186,23 @@
             align-items: center;
             gap: 10px;
             padding: 15px;
-            background: wine;
-            border-top: 1px solid #eee;
+            background: var(--bg-panel);
+            border-top: 1px solid var(--border);
         }
 
         .chat-input input {
             flex: 1;
             border: none;
             outline: none;
-            background: #f1f3f6;
+            background: #202023;
+            color: var(--text);
             border-radius: 25px;
             padding: 13px 17px;
             font-size: 14px;
+        }
+
+        .chat-input input::placeholder {
+            color: var(--muted);
         }
 
         .send-button {
@@ -189,7 +210,7 @@
             height: 45px;
             border: none;
             border-radius: 50%;
-            background: #1976d2;
+            background: var(--accent);
             color: white;
             cursor: pointer;
             font-size: 18px;
@@ -197,7 +218,7 @@
         }
 
         .send-button:hover {
-            background: #0d47a1;
+            background: var(--accent-dark);
             transform: scale(1.05);
         }
 
@@ -206,9 +227,9 @@
         .typing {
             display: none;
             font-size: 12px;
-            color: #777;
+            color: var(--muted);
             padding: 0 20px 8px;
-            background: #f5f7fb;
+            background: var(--bg-dark);
         }
 
         /* RESPONSIVO */
@@ -234,16 +255,16 @@
     <!-- CABEÇALHO -->
     <div class="chat-header">
 
-        <div class="school-icon">
-            🐲
+        <div class="studio-icon">
+            🖋️
         </div>
 
         <div class="header-info">
-            <h2>Drogon</h2>
+            <h2>Atendente Virtual</h2>
 
             <div class="status">
                 <span class="online"></span>
-                Online • Dragon_tattoo
+                Online • Dragon_Tattoo
             </div>
         </div>
 
@@ -257,17 +278,18 @@
 
             <div class="message-content">
 
-                Olá! 👋
+                E aí! 🖤
 
                 <br><br>
 
-                Seja bem-vindo(a) ao atendimento virtual da nossa escola.
+                Seja bem-vindo(a) ao atendimento virtual do
+                <strong>Dragon_Tattoo</strong>.
 
                 <br><br>
 
-                Como posso ajudar você?
+                Bora tirar sua ideia do papel?
 
-                <span class="time">16:08</span>
+                <span class="time"></span>
 
             </div>
 
@@ -282,14 +304,14 @@
 
                 <br><br>
 
-                📚 Cursos e disciplinas<br>
-                📝 Matrículas<br>
-                📅 Horários<br>
-                💰 Mensalidades<br>
+                💬 Orçamento<br>
+                📅 Agendamento<br>
+                🎨 Estilos e tatuadores<br>
+                🩹 Cuidados pré e pós<br>
                 📍 Localização<br>
                 📞 Contato
 
-                <span class="time">16:08</span>
+                <span class="time"></span>
 
             </div>
 
@@ -311,20 +333,24 @@
 
         <div class="options">
 
-            <button class="option" onclick="quickMessage('Quero informações sobre matrícula')">
-                📝 Matrícula
+            <button class="option" onclick="quickMessage('Quero fazer um orçamento')">
+                💬 Orçamento
             </button>
 
-            <button class="option" onclick="quickMessage('Quais cursos estão disponíveis?')">
-                📚 Cursos
+            <button class="option" onclick="quickMessage('Quero agendar uma sessão')">
+                📅 Agendar
             </button>
 
-            <button class="option" onclick="quickMessage('Quais são os horários das aulas?')">
-                📅 Horários
+            <button class="option" onclick="quickMessage('Quais estilos vocês fazem?')">
+                🎨 Estilos
             </button>
 
-            <button class="option" onclick="quickMessage('Qual o valor da mensalidade?')">
-                💰 Mensalidade
+            <button class="option" onclick="quickMessage('Quais os cuidados pós-tatuagem?')">
+                🩹 Cuidados
+            </button>
+
+            <button class="option" onclick="quickMessage('Onde fica o estúdio?')">
+                📍 Localização
             </button>
 
         </div>
@@ -339,7 +365,7 @@
             type="text"
             id="messageInput"
             placeholder="Digite sua mensagem..."
-            onkeypress="handleKey(event)"
+            onkeydown="handleKey(event)"
         >
 
         <button class="send-button" onclick="sendMessage()">
@@ -353,6 +379,9 @@
 
 <script>
 
+    let isTyping = false;
+
+
     function getTime() {
 
         const now = new Date();
@@ -365,6 +394,36 @@
     }
 
 
+    // Hora das mensagens iniciais
+    document.querySelectorAll(".time").forEach(function (el) {
+        el.textContent = getTime();
+    });
+
+
+    // Evita injeção de HTML no texto digitado pelo usuário
+    function escapeHtml(str) {
+
+        return str
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#39;");
+
+    }
+
+
+    // Minúsculas e sem acentos
+    function normalize(str) {
+
+        return str
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "");
+
+    }
+
+
     function addMessage(text, type) {
 
         const chat = document.getElementById("chatMessages");
@@ -373,9 +432,11 @@
 
         message.classList.add("message", type);
 
+        const safeText = type === "user" ? escapeHtml(text) : text;
+
         message.innerHTML = `
             <div class="message-content">
-                ${text}
+                ${safeText}
                 <span class="time">${getTime()}</span>
             </div>
         `;
@@ -393,7 +454,7 @@
 
         const text = input.value.trim();
 
-        if (text === "") {
+        if (text === "" || isTyping) {
             return;
         }
 
@@ -408,6 +469,10 @@
 
     function quickMessage(text) {
 
+        if (isTyping) {
+            return;
+        }
+
         addMessage(text, "user");
 
         simulateResponse(text);
@@ -419,6 +484,8 @@
 
         const typing = document.getElementById("typing");
 
+        isTyping = true;
+
         typing.style.display = "block";
 
         setTimeout(() => {
@@ -427,118 +494,174 @@
 
             let response = "";
 
-            const message = text.toLowerCase();
+            const message = normalize(text);
+
+            // Busca por início de palavra (evita "idade" dentro de "cidade")
+            // Use "\\b" no fim do termo para palavra exata (ex.: "dor\\b")
+            const has = (...terms) =>
+                terms.some(t => new RegExp("\\b" + t).test(message));
 
 
-            if (
-                message.includes("matrícula") ||
-                message.includes("matricula")
-            ) {
+            if (has("orcamento", "preco", "valor", "quanto custa", "quanto cobra", "quanto fica")) {
 
                 response = `
-                    📝 <strong>Matrículas</strong><br><br>
+                    💬 <strong>Orçamento</strong><br><br>
 
-                    Para realizar sua matrícula, é necessário
-                    apresentar os documentos solicitados pela escola.
+                    O valor depende do <strong>tamanho</strong>,
+                    do <strong>local do corpo</strong>, da
+                    <strong>complexidade</strong> e do
+                    <strong>estilo</strong> do desenho.
 
                     <br><br>
 
-                    Posso informar os documentos necessários ou
-                    encaminhar você para a secretaria.
+                    Valor mínimo: 90
+
+                    <br><br>
+
+                    Me envie sua ideia, uma referência e onde
+                    pretende tatuar que repasso ao tatuador.
                 `;
 
             }
 
-            else if (
-                message.includes("curso") ||
-                message.includes("disciplina")
-            ) {
+            else if (has("agend", "marcar", "marcacao", "sinal", "remarc", "disponive", "sessao")) {
 
                 response = `
-                    📚 <strong>Cursos disponíveis</strong><br><br>
+                    📅 <strong>Agendamento</strong><br><br>
 
-                    Atualmente temos cursos nas áreas de
-                    Administração, Informática, Tecnologia e
-                    Desenvolvimento Profissional.
+                    Para reservar seu horário, combinamos a ideia,
+                    definimos a data e confirmamos com um sinal.
 
                     <br><br>
 
-                    Digite o nome do curso para receber mais informações.
+                    Sinal: 50% de todas as tattoos<br>
+                    Remarcação: não necessario devido ou sinal ja pago
+
+                    <br><br>
+
+                    Funcionamos em: Funcionamos das 9h as 22h,podendo passar do horario de fechamento dependendo da tattoo
+
+            }
+
+            else if (has("estilo", "tatuador", "artista", "portfolio", "realismo", "blackwork", "fineline")) {
+
+                response = 
+                    🎨 <strong>Estilos e tatuadores</strong><br><br>
+
+                    Estilos trabalhados: fine line,neo tradicional,old school,ignorsnt style,oriental tradicional
+
+                    <br><br>
+
+                    Tatuadores: Pamela
+
+                    <br><br>
+
+                    Veja trabalhos no Instagram: Dragon_Tattoos
                 `;
 
             }
 
-            else if (
-                message.includes("horário") ||
-                message.includes("horario") ||
-                message.includes("aula")
-            ) {
+            else if (has("cuidado", "cicatriz", "pos\\b", "pos-", "pomada", "pre\\b", "antes de tatuar", "depois de tatuar")) {
 
                 response = `
-                    📅 <strong>Horários</strong><br><br>
+                    🩹 <strong>Cuidados</strong><br><br>
 
-                    As aulas acontecem de segunda a sexta-feira.
+                    <strong>Antes:</strong> durma bem, se alimente e
+                    evite álcool nas 24h anteriores.
 
                     <br><br>
 
-                    Manhã: 08:00 às 12:00<br>
-                    Tarde: 13:00 às 17:00<br>
-                    Noite: 19:00 às 22:00
+                    <strong>Depois:</strong> lave com sabão neutro,
+                    hidrate com a pomada indicada, não coce e evite
+                    sol, piscina e mar durante a cicatrização.
+
+                    <br><br>
+
+                    Recomendações específicas do estúdio: Seguir a lista de cuidados alimentares durante a primeira semana para ter uma cicatrização tranquila
+                    `;
+
+            }
+
+            else if (has("dor\\b", "dores", "doi\\b", "machuca", "local do corpo")) {
+
+                response = 
+                    ⚡ <strong>Dor</strong><br><br>
+
+                    A sensação varia de pessoa para pessoa e conforme
+                    o local. Costelas, pés, mãos, pescoço e áreas
+                    ósseas costumam incomodar mais; regiões com mais
+                    músculo, como braço e coxa, tendem a ser mais
+                    tranquilas.
+
+                    <br><br>
+
+                    Se estiver inseguro(a), converse com o tatuador
+                    antes de fechar o projeto.
                 `;
 
             }
 
-            else if (
-                message.includes("mensalidade") ||
-                message.includes("preço") ||
-                message.includes("valor")
-            ) {
+            else if (has("cobertura", "cobrir", "retoque", "remocao", "remover", "piercing")) {
 
                 response = `
-                    💰 <strong>Mensalidades</strong><br><br>
+                    🔁 <strong>Cobertura, retoque e extras</strong><br><br>
 
-                    O valor da mensalidade depende do curso
-                    escolhido.
+                    Cobertura e retoque dependem da avaliação do
+                    tatuador, feita sobre a tatuagem atual.
 
                     <br><br>
 
-                    Informe o curso que deseja consultar
-                    para receber o valor correspondente.
+                    Política de retoque: o retoque sera gratuito porem se tiver q ter retoque devido a mal cuidado um valor sera cobrado,valor a ser acertado com o tattuador(a)<br>
+                    Serviços extras: sera cobrado a parte
                 `;
 
             }
 
-            else if (
-                message.includes("local") ||
-                message.includes("endereço") ||
-                message.includes("endereco")
-            ) {
+            else if (has("idade", "menor", "maior de", "documento", "rg\\b")) {
+
+                response = `
+                    🪪 <strong>Idade e documentos</strong><br><br>
+
+                    Idade mínima: 18+ menores de idade somente com autorização dos responsaveis
+
+                    <br><br>
+
+                    Documentos exigidos: RG,caso menor de idade sera nessecario RG e autorização do responsavel por escrito
+                `;
+
+            }
+
+            else if (has("local", "endereco", "onde fica", "como chegar", "cidade")) {
 
                 response = `
                     📍 <strong>Localização</strong><br><br>
 
-                    Nossa escola está localizada na região central
-                    da cidade.
+                    Endereço: Rua principal N°146<br>
+                    Referência: esquina perto do mercado
 
                     <br><br>
 
-                    Para visualizar o endereço completo,
-                    entre em contato com nossa secretaria.
+                    Atendemos com hora marcada.
                 `;
 
             }
 
-            else if (
-                message.includes("oi") ||
-                message.includes("olá") ||
-                message.includes("ola") ||
-                message.includes("bom dia") ||
-                message.includes("boa tarde") ||
-                message.includes("boa noite")
-            ) {
+            else if (has("contato", "whatsapp", "zap", "instagram", "telefone", "email")) {
 
                 response = `
-                    Olá! 😊
+                    📞 <strong>Contato</strong><br><br>
+
+                    WhatsApp: 14998430727<br>
+                    Instagram: Dragon_Tattoos<br>
+                    E-mail: 
+                `;
+
+            }
+
+            else if (has("oi\\b", "ola\\b", "bom dia", "boa tarde", "boa noite", "e ai")) {
+
+                response = `
+                    Fala! 🖤
 
                     <br><br>
 
@@ -564,13 +687,15 @@
                     <br><br>
 
                     Você pode perguntar sobre
-                    <strong>matrícula, cursos, horários,
-                    mensalidades ou localização</strong>.
+                    <strong>orçamento, agendamento, estilos,
+                    cuidados, localização ou contato</strong>.
                 `;
 
             }
 
             addMessage(response, "bot");
+
+            isTyping = false;
 
         }, 1200);
 
@@ -590,4 +715,6 @@
 </script>
 
 </body>
+
+
 </html>
